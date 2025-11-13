@@ -1,4 +1,4 @@
-
+const generalContainer = document.querySelector('.general-container');
 
 const gameInit = ()=>{
     let div = document.createElement('div');

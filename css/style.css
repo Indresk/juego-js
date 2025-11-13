@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 @property --wood-color{
     syntax: "<color>";
@@ -32,7 +32,7 @@
 }
 
 *{
-    font-family: "Chelsea Market", system-ui;
+    font-family: "Press Start 2P", system-ui;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -169,3 +169,4 @@ button.music{
     bottom: 10px;
     right: 10px;
 }
+
