@@ -1,4 +1,4 @@
-import MovingDirection from "./movingDirection.js";
+import MovingDirection from "./MovingDirection.js";
 
 export default class Player {
     constructor(x,y,tileSize,velocity,tileMap){
