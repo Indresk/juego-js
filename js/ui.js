@@ -28,8 +28,8 @@ if(e.target.innerText === 'NUEVA PARTIDA'){
         await new Promise(res => setTimeout(res, 1000));
         db = await Promise.all([
             getData('../db/maps.json'),
-            getData('https://jsonplaceholder.typicode.com/todos/1'),
-            getData('https://jsonplaceholder.typicode.com/todos/2')
+            // getData('https://jsonplaceholder.typicode.com/todos/1'),
+            // getData('https://jsonplaceholder.typicode.com/todos/2')
         ]);
     }
     catch(error){
@@ -37,9 +37,8 @@ if(e.target.innerText === 'NUEVA PARTIDA'){
         ${error}`;
         return;
     }
-    let maps = db[0];
-    // console.log(db) // test
-    tileMap.mapDefiner(maps);
+    console.log(db) // Test
+    tileMap.mapDefiner(db[0]);
     generalContainer.innerHTML = '';
     generalContainer.appendChild(gameBoard);  
     gameLoop(gameBoard);
