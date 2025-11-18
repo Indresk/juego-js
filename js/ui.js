@@ -1,37 +1,14 @@
 import TileMap from "./TileMap.js";
+import getData from "./getData.js";
 const generalContainer = document.querySelector('.general-container');
 
-const tileSize = 90;
+const tileSize = generalContainer.clientWidth/15;
 const velocity = tileSize/10;
+
+let db = undefined;
 
 const tileMap = new TileMap(tileSize);
 const player = tileMap.getPlayer(velocity);
-
-const gameBoard = document.createElement('div');
-gameBoard.id = 'gameBoard';
-gameBoard.style.position = 'relative';
-
-
-// const getData = async (url)=>{
-//     try{
-//         const r = await fetch(url);
-//         const data = await r.json();
-//         return await data;
-//     }
-//     catch(error){
-//         console.warn('error en: ',error)
-//         return null;
-//     }
-//     finally{
-//     }
-// }
-
-// console.log(getData('../db/maps.json'));
-
-// fetch('../db/maps.json')
-//     .then(respuesta => respuesta.json())
-//     .then(datos => console.log(datos))
-
 
 const gameLoop = (canvas) => {
     setInterval(()=>{
@@ -40,14 +17,37 @@ const gameLoop = (canvas) => {
     },1000/30)
 }
 
-// setTimeout(()=>{tileMap.mapSelector(2)},3000)
+const gameBoard = document.createElement('div');
+gameBoard.id = 'gameBoard';
+gameBoard.style.position = 'relative';
 
-// generalContainer.addEventListener('click',(e)=>{
-//     if(e.target.innerText === 'NUEVA PARTIDA'){
-//         generalContainer.innerHTML = '';
-        generalContainer.appendChild(gameBoard);
-        gameLoop(gameBoard);
-//     }
-// });
+generalContainer.addEventListener('click', async (e)=>{
+if(e.target.innerText === 'NUEVA PARTIDA'){
+        generalContainer.innerHTML = 'Cargando';
+    try{
+        await new Promise(res => setTimeout(res, 1000));
+        db = await Promise.all([
+            getData('../db/maps.json'),
+            getData('https://jsonplaceholder.typicode.com/todos/1'),
+            getData('https://jsonplaceholder.typicode.com/todos/2')
+        ]);
+    }
+    catch(error){
+        generalContainer.innerHTML = `Error en la carga de archivos:
+        ${error}`;
+        return;
+    }
+    let maps = db[0];
+    // console.log(db) // test
+    tileMap.mapDefiner(maps);
+    generalContainer.innerHTML = '';
+    generalContainer.appendChild(gameBoard);  
+    gameLoop(gameBoard);
+}});
+
+
+
+
+
 
 
