@@ -8,8 +8,7 @@ export default class Player {
         this.velocity = velocity;
         this.tileMap = tileMap;
         this.currentMovingDirection = null;
-        window.addEventListener('keydown',this.#keydown);
-        window.addEventListener('keyup',this.#keyup);
+        this.texts = undefined;
         this.#loadImages();
     }
 
@@ -49,24 +48,24 @@ export default class Player {
         canvas.appendChild(tile);
     }
 
-    #keyup = (event) => {
-        if(["w","a","s","d"].includes(event.key)){
+    keyup = (event) => {
+        if(["w","a","s","d"].includes(event)){
             this.currentMovingDirection = null;
         }
     }
 
-    #keydown = (event) => {
-        if(event.key == "w") this.currentMovingDirection = MovingDirection.up;
-        if(event.key == "a") this.currentMovingDirection = MovingDirection.left;
-        if(event.key == "s") this.currentMovingDirection = MovingDirection.down;
-        if(event.key == "d") this.currentMovingDirection = MovingDirection.right;
+    keydown = (event) => {
+        if(event == "w") this.currentMovingDirection = MovingDirection.up;
+        if(event == "a") this.currentMovingDirection = MovingDirection.left;
+        if(event == "s") this.currentMovingDirection = MovingDirection.down;
+        if(event == "d") this.currentMovingDirection = MovingDirection.right;
     }
 
     #moveVerification() {
         if (this.currentMovingDirection) {
             let verification = this.tileMap.collide(this.x, this.y, this.currentMovingDirection);
             let index = this.tileMap.mapIndex;
-            if ([2,1,6].includes(verification.itemColided) || verification === true) {
+            if ([2,1,6,8].includes(verification.itemColided) || verification === true) {
                 return;
             }
             this.#mapChanger(verification.itemColided,verification.itemLocation,index);
@@ -74,23 +73,29 @@ export default class Player {
         this.#move();
     }
 
+    getTexts(text){
+        this.texts = text;
+    }
+
     #mapChanger(verification,location,mapIndex){
-        if (verification === 3 && mapIndex === 0 && location.row === 0 && location.col === 4) {
+        if (verification === 3 && mapIndex === 0) { // && location.row === 0 && location.col === 3
             this.tileMap.mapSelector(1);
             this.y = this.tileSize*5
-        }
-        if (verification === 3 && mapIndex === 0 && location.row === 3 && location.col === 8) {
-            this.tileMap.mapSelector(2);
-            this.y = this.tileSize*5
-        }
-        if (verification === 3 && mapIndex === 2) {
-            this.tileMap.mapSelector(0);
-            this.y = this.tileSize*5
+            this.x = this.tileSize*4
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TextoMap00;
         }
         if (verification === 3 && mapIndex === 1) {
             this.tileMap.mapSelector(0);
             this.y = this.tileSize*1
-            this.x = this.tileSize*4
+            this.x = this.tileSize*3
+            this.currentMovingDirection = null;
+        }
+        if (verification === 10 && mapIndex === 1) {
+            this.tileMap.mapSelector(2);
+            this.y = this.tileSize*6
+            this.x = this.tileSize*3
+            this.currentMovingDirection = null;
         }
     }
 

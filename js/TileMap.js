@@ -17,6 +17,9 @@ export default class TileMap{
     // 5 -- Grass
     // 6 -- Tree
     // 7 -- Path
+    // 8 -- Sign
+    // 9 -- Mushroom
+    // 10 -- PathTp
 
     #mapImages(){
         const floor = './assets/img/maptiles/white-tile.webp';
@@ -27,8 +30,11 @@ export default class TileMap{
         const grass = './assets/img/maptiles/grass.webp';
         const tree = './assets/img/maptiles/tree.webp';
         const path = './assets/img/maptiles/rocks-path.webp';
+        const sign = './assets/img/maptiles/sign.webp';
+        const mushroom = './assets/img/maptiles/mushroom.webp';
+        const pathTp = './assets/img/maptiles/rocks-path-tp.webp';
 
-        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path]
+        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,pathTp]
     }
 
     mapDefiner(maps){
@@ -83,7 +89,7 @@ export default class TileMap{
     }
 
     getPlayer(velocity){
-        return new Player(4 * this.tileSize,5 * this.tileSize,this.tileSize,velocity, this);
+        return new Player(3 * this.tileSize,4 * this.tileSize,this.tileSize,velocity, this);
     }
 
     collide(x, y, direction) {

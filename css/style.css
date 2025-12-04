@@ -37,7 +37,6 @@
     padding: 0;
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
-    color: #EBDEC2;
 }
 
 body{
@@ -79,6 +78,9 @@ img, picture, svg{
     inset: 0;
     margin: 5%;
     z-index: -1;
+    display: flex;
+    color: #EBDEC2;
+    flex-wrap: wrap;
 }
 
 .general-container>*{
@@ -97,6 +99,7 @@ img, picture, svg{
     flex-direction: column;
     gap: 10px;
     justify-content: space-around;
+    /* color: #EBDEC2; */
 }
 .intro-container>.btniL{
     display: flex;
@@ -170,3 +173,90 @@ button.music{
     right: 10px;
 }
 
+.toast{
+    background: var(--wood-color) !important;
+}
+
+.controlBoard{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#WKey{
+    width: 80px;
+    height: 80px;
+    position: relative;
+    background-color: white;
+    border: solid 3px black;
+    color: black;
+    transition: background-color ease 0.2s, color ease 0.2s, border ease 0.2s;
+}
+#WKey:hover{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+#WKey.active{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+
+#SKey{
+    width: 80px;
+    height: 80px;
+    position: relative;
+    background-color: white;
+    border: solid 3px black;
+    color: black;
+    transition: background-color ease 0.2s, color ease 0.2s, border ease 0.2s;
+}
+#SKey:hover{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+#SKey.active{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+
+#AKey{
+    width: 80px;
+    height: 80px;
+    position: relative;
+    background-color: white;
+    border: solid 3px black;
+    color: black;
+    transition: background-color ease 0.2s, color ease 0.2s, border ease 0.2s;
+}
+#AKey:hover{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+#AKey.active{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+
+#DKey{
+    width: 80px;
+    height: 80px;
+    position: relative;
+    background-color: white;
+    border: solid 3px black;
+    color: black;
+    transition: background-color ease 0.2s, color ease 0.2s, border ease 0.2s;
+}
+#DKey:hover{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+#DKey.active{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
