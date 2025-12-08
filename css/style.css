@@ -80,7 +80,6 @@ img, picture, svg{
     z-index: -1;
     display: flex;
     color: #EBDEC2;
-    flex-wrap: wrap;
 }
 
 .general-container>*{
@@ -179,6 +178,8 @@ button.music{
 
 .controlBoard{
     background-color: rgba(0, 0, 0, 0.3);
+    flex-basis: 40%;
+    padding: 1rem;
 }
 
 #WKey{
@@ -256,6 +257,26 @@ button.music{
     color: white;
 }
 #DKey.active{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+
+#EKey{
+    width: 80px;
+    height: 80px;
+    position: relative;
+    background-color: white;
+    border: solid 3px black;
+    color: black;
+    transition: background-color ease 0.2s, color ease 0.2s, border ease 0.2s;
+}
+#EKey:hover{
+    background-color: black;
+    border: solid 3px white;
+    color: white;
+}
+#EKey.active{
     background-color: black;
     border: solid 3px white;
     color: white;

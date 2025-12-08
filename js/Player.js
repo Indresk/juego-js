@@ -8,7 +8,9 @@ export default class Player {
         this.velocity = velocity;
         this.tileMap = tileMap;
         this.currentMovingDirection = null;
+        this.viewDirection = null;
         this.texts = undefined;
+        this.items = 0;
         this.#loadImages();
     }
 
@@ -59,13 +61,15 @@ export default class Player {
         if(event == "a") this.currentMovingDirection = MovingDirection.left;
         if(event == "s") this.currentMovingDirection = MovingDirection.down;
         if(event == "d") this.currentMovingDirection = MovingDirection.right;
+        if(this.currentMovingDirection) this.viewDirection = this.currentMovingDirection;
+        if(event == "e") this.pickupItem();
     }
 
     #moveVerification() {
         if (this.currentMovingDirection) {
             let verification = this.tileMap.collide(this.x, this.y, this.currentMovingDirection);
             let index = this.tileMap.mapIndex;
-            if ([2,1,6,8].includes(verification.itemColided) || verification === true) {
+            if ([2,1,6,8,17,18].includes(verification.itemColided) || verification === true) {
                 return;
             }
             this.#mapChanger(verification.itemColided,verification.itemLocation,index);
@@ -83,19 +87,46 @@ export default class Player {
             this.y = this.tileSize*5
             this.x = this.tileSize*4
             this.currentMovingDirection = null;
-            document.querySelector('#displayed-text').innerText = this.texts.TextoMap00;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap01;
         }
+
+        // fuera de la cabaña
         if (verification === 3 && mapIndex === 1) {
             this.tileMap.mapSelector(0);
             this.y = this.tileSize*1
             this.x = this.tileSize*3
             this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap00;
         }
         if (verification === 10 && mapIndex === 1) {
             this.tileMap.mapSelector(2);
             this.y = this.tileSize*6
             this.x = this.tileSize*3
             this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap02;
+        }
+
+        // ruta slime
+        if (verification === 20 && mapIndex === 2) {
+            this.tileMap.mapSelector(1);
+            this.y = this.tileSize*0
+            this.x = this.tileSize*4
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap01;
+        }
+        if (verification === 10 && mapIndex === 2) {
+            this.tileMap.mapSelector(3);
+            this.y = this.tileSize*0
+            this.x = this.tileSize*4
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap04;
+        }
+        if (verification === 21 && mapIndex === 2) {
+            this.tileMap.mapSelector(4);
+            this.y = this.tileSize*0
+            this.x = this.tileSize*4
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap07;
         }
     }
 
@@ -117,6 +148,15 @@ export default class Player {
                 this.x += this.velocity;
                 this.playerMovementIndex = (Math.round(this.x/100)%2===0)?2:6;
             break;
+        }
+    }
+
+    pickupItem(){
+        let verification = this.tileMap.collide(this.x, this.y, this.viewDirection);
+        if ([1,18].includes(verification.itemColided)) {
+            this.items += 1;
+            window.document.querySelector('#pi').innerText = `Items del jugador: ${this.items}`
+            this.tileMap.modifyWorld(this.x, this.y, this.viewDirection);
         }
     }
 }

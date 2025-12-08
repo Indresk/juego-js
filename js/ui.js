@@ -47,6 +47,8 @@ window.addEventListener('click', async (e)=>{
     }
 });
 
+// UI detection
+
 window.addEventListener('mouseup', (e)=>{
     if(e.target.closest('#WKey'))player.keyup('w');
     if(e.target.closest('#SKey'))player.keyup('s');
@@ -58,7 +60,8 @@ window.addEventListener('mousedown', (e)=>{
     if(e.target.closest('#WKey'))player.keydown('w');
     if(e.target.closest('#SKey'))player.keydown('s');
     if(e.target.closest('#AKey'))player.keydown('a');
-    if(e.target.closest('#DKey'))player.keydown('d');    
+    if(e.target.closest('#DKey'))player.keydown('d');
+    if(e.target.closest('#EKey'))player.keydown('e');
 });
 
 window.addEventListener('keyup', (e)=>{
@@ -67,6 +70,7 @@ window.addEventListener('keyup', (e)=>{
     if(e.key == 's') generalContainer.querySelector('#SKey').className = '';
     if(e.key == 'a') generalContainer.querySelector('#AKey').className = '';
     if(e.key == 'd') generalContainer.querySelector('#DKey').className = '';   
+    if(e.key == 'e') generalContainer.querySelector('#EKey').className = ''; 
 });
 
 window.addEventListener('keydown', (e)=>{
@@ -75,6 +79,7 @@ window.addEventListener('keydown', (e)=>{
     if(e.key == 's') generalContainer.querySelector('#SKey').className = 'active';
     if(e.key == 'a') generalContainer.querySelector('#AKey').className = 'active';
     if(e.key == 'd') generalContainer.querySelector('#DKey').className = 'active';
+    if(e.key == 'e') generalContainer.querySelector('#EKey').className = 'active';
 });
 
 

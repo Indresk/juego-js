@@ -22,19 +22,30 @@ export default class TileMap{
     // 10 -- PathTp
 
     #mapImages(){
-        const floor = './assets/img/maptiles/white-tile.webp';
-        const pot = './assets/img/maptiles/pot.webp';
-        const wall = './assets/img/maptiles/brick-g.webp';
-        const portal = './assets/img/maptiles/door-open.webp';
-        const enemy = './assets/img/maptiles/egg.webp';
-        const grass = './assets/img/maptiles/grass.webp';
-        const tree = './assets/img/maptiles/tree.webp';
-        const path = './assets/img/maptiles/rocks-path.webp';
-        const sign = './assets/img/maptiles/sign.webp';
-        const mushroom = './assets/img/maptiles/mushroom.webp';
-        const pathTp = './assets/img/maptiles/rocks-path-tp.webp';
+        const floor = './assets/img/maptiles/white-tile.webp';       // 00
+        const pot = './assets/img/maptiles/pot.webp';                // 01
+        const wall = './assets/img/maptiles/brick-g.webp';           // 02
+        const portal = './assets/img/maptiles/door-open.webp';       // 03
+        const enemy = './assets/img/maptiles/egg.webp';              // 04
+        const grass = './assets/img/maptiles/grass.webp';            // 05
+        const tree = './assets/img/maptiles/tree.webp';              // 06
+        const path = './assets/img/maptiles/rocks-path.webp';        // 07
+        const sign = './assets/img/maptiles/sign.webp';              // 08
+        const mushroom = './assets/img/maptiles/mushroom.webp';      // 09
+        const pathTp = './assets/img/maptiles/rocks-path-tp.webp';   // 10
+        const lakebl = './assets/img/maptiles/lake-bl.webp';         // 11
+        const lakebr = './assets/img/maptiles/lake-br.webp';         // 12
+        const laketl = './assets/img/maptiles/lake-tl.webp';         // 13
+        const laketr = './assets/img/maptiles/lake-tr.webp';         // 14
+        const lakeml = './assets/img/maptiles/lake-ml.webp';         // 15
+        const lakemr = './assets/img/maptiles/lake-mr.webp';         // 16
+        const treeWl = './assets/img/maptiles/tree-wl.webp';         // 17
+        const potion = './assets/img/maptiles/full-potion.webp';     // 18
+        const egg = './assets/img/maptiles/egg.webp';                // 19
+        const floorTp = './assets/img/maptiles/white-tile.webp';     // 20
+        const grassTp = './assets/img/maptiles/grass.webp';          // 21
 
-        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,pathTp]
+        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,pathTp,lakebl,lakebr,laketl,laketr,lakeml,lakemr,treeWl,potion,egg,floorTp,grassTp]
     }
 
     mapDefiner(maps){
@@ -123,5 +134,36 @@ export default class TileMap{
         if (row < 0 || col < 0 || row >= this.selectedMap.length || col >= this.selectedMap[0].length)
             return true;
         return {itemColided: this.selectedMap[row][col], itemLocation:{row:row,col:col}};
+    }
+
+    modifyWorld(x, y, direction){
+        const s = this.tileSize;
+        const half = s / 2;
+        
+        const centerX = x + half;
+        const centerY = y + half;
+
+        let checkX = centerX;
+        let checkY = centerY;
+
+        switch (direction) {
+            case 4:    
+                checkY = centerY - half - 1;
+            break;
+            case 1:  
+                checkY = centerY + half + 1; 
+            break;
+            case 2:  
+                checkX = centerX - half - 1; 
+            break;
+            case 3: 
+                checkX = centerX + half + 1; 
+            break;
+        }
+
+        const col = Math.floor(checkX / s);
+        const row = Math.floor(checkY / s);
+
+        this.selectedMap[row].splice(col,1,0);
     }
 }
