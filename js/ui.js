@@ -25,6 +25,7 @@ gameBoard.id = 'gameBoard';
 gameBoard.style.position = 'relative';
 
 window.addEventListener('click', async (e)=>{
+    sound.play();
     if(e.target.innerText === 'NUEVA PARTIDA'){
         tileMap = new TileMap(tileSize);
         player = tileMap.getPlayer(velocity);

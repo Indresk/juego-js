@@ -5,7 +5,6 @@ const itemSound = new Audio('../assets/sounds/getitem.mp3');
 const gameoverSound = new Audio('../assets/sounds/gameover.mp3');
 const fight = new Audio('../assets/sounds/fight-music.mp3');
 sound.loop = true;
-sound.play();
 sound.volume = 0.3;
 gameoverSound.volume = 0.4;
 itemSound.volume = 0.4;
