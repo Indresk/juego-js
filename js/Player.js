@@ -1,4 +1,5 @@
 import MovingDirection from "./MovingDirection.js";
+import gameover from "./gameover.js";
 
 export default class Player {
     constructor(x,y,tileSize,velocity,tileMap){
@@ -13,6 +14,7 @@ export default class Player {
         this.moveAllowed = true;
         this.texts = undefined;
         this.items = 0;
+        this.enemiesDefeted = 0;
         this.#loadImages();
     }
 
@@ -72,7 +74,7 @@ export default class Player {
             if (this.currentMovingDirection) {
                 let verification = this.tileMap.collide(this.x, this.y, this.currentMovingDirection);
                 let index = this.tileMap.mapIndex;
-                if ([2,1,6,8,17,18].includes(verification.itemColided) || verification === true) {
+                if ([2,1,6,8,17,18,25,26,27,28,29,30,32,33].includes(verification.itemColided) || verification === true) {
                     return;
                 }
                 this.#mapChanger(verification.itemColided,verification.itemLocation,index);
@@ -109,6 +111,13 @@ export default class Player {
             this.currentMovingDirection = null;
             document.querySelector('#displayed-text').innerText = this.texts.TMap02;
         }
+        if (mapIndex === 1 && location.row === 3 && location.col === 8) {
+            this.tileMap.mapSelector(5);
+            this.y = this.tileSize*3
+            this.x = this.tileSize*0
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap03;
+        }
 
         // ruta slime
         if (verification === 0 && mapIndex === 2 && location.row === 6 && location.col === 3) {
@@ -128,28 +137,67 @@ export default class Player {
         if (verification === 0 && mapIndex === 2 && location.row === 3 && location.col === 6) {
             this.tileMap.mapSelector(4);
             this.y = this.tileSize*2
-            this.x = this.tileSize*0
+            this.x = this.tileSize*1
             this.currentMovingDirection = null;
             document.querySelector('#displayed-text').innerText = this.texts.TMap07;
         }
         // combate slime
-        if (mapIndex === 3 && location.row === 2 && location.col === 3) {
-            try{this.startBattleOverlay(1)}catch(error){console.log(error)}
+        if (verification === 10 && mapIndex === 3) {
+            this.startBattleOverlay(1)
             this.moveAllowed = false
             this.currentMovingDirection = null;
             document.querySelector('#displayed-text').innerText = this.texts.TMap04;
         }
         if (mapIndex === 3 && location.row === 5 && location.col === 3) {
             this.tileMap.mapSelector(2);
-            this.y = this.tileSize*5
+            this.y = this.tileSize*0
             this.x = this.tileSize*3
             this.currentMovingDirection = null;
-            document.querySelector('#displayed-text').innerText = this.texts.TMap04;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap02;
+        }
+
+        //pozo
+        if (verification === 31 && mapIndex === 4) {
+            gameover(this.items,this.enemiesDefeted,this.health);
         }
 
         // ruta armiño
-
+        if (mapIndex === 5 && location.row === 3 && location.col === 0) {
+            this.tileMap.mapSelector(1);
+            this.y = this.tileSize*3
+            this.x = this.tileSize*8
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap01;
+        }
+        if (verification === 31 && mapIndex === 5) {
+            this.tileMap.mapSelector(4);
+            this.y = this.tileSize*2
+            this.x = this.tileSize*1
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap07;
+        }
+        if (verification === 7 && mapIndex === 5) {
+            this.tileMap.mapSelector(6);
+            this.y = this.tileSize*2
+            this.x = this.tileSize*0
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap09;
+        }
+        if (mapIndex === 6 && location.row === 2 && location.col === 0) {
+            this.tileMap.mapSelector(5);
+            this.y = this.tileSize*3
+            this.x = this.tileSize*4
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap03;
+        }
         
+        // combate armiño
+        if (verification === 10 && mapIndex === 6) {
+            this.startBattleOverlay(2)
+            this.moveAllowed = false
+            this.currentMovingDirection = null;
+            document.querySelector('#displayed-text').innerText = this.texts.TMap04;
+        }
     }
 
     #move(){
@@ -175,10 +223,11 @@ export default class Player {
 
     pickupItem(){
         let verification = this.tileMap.collide(this.x, this.y, this.viewDirection);
-        if ([1,18].includes(verification.itemColided)) {
+        if ([1,18,9,22].includes(verification.itemColided)) {
             this.items += 1;
             this.updateHUD();
             this.tileMap.modifyWorld(this.x, this.y, this.viewDirection);
+            itemSound.play();
         }
     }
 
@@ -188,15 +237,22 @@ export default class Player {
     }
 
     startBattleOverlay(enemyCode){
+        sound.pause();
+        fight.play();
         let enemyName = '';
         let enemyHealth = 1;
+        let enemyMaxDamage = 1;
         if (enemyCode === 2) {
             enemyHealth = 8;
-            enemyName = 'Armiño';}
+            enemyName = 'Armiño';
+            enemyMaxDamage = 6;
+        }
 
         if (enemyCode === 1) {
             enemyHealth = 5;
-            enemyName = 'Slime';}
+            enemyName = 'Slime';
+            enemyMaxDamage = 5;
+        }
 
         const overlay = document.createElement('div');
         overlay.id = 'battle-overlay';
@@ -242,11 +298,12 @@ export default class Player {
         const cleanup = () => {
             if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
             this.moveAllowed = true;
+            sound.play();
+            fight.pause();
         };
 
         const cancelBtn = panel.querySelector('#battle-cancel');
         cancelBtn.addEventListener('click', () => {
-            log('Batalla cancelada.');
             cleanup();
         });
 
@@ -255,7 +312,6 @@ export default class Player {
             startBtn.disabled = true;
             cancelBtn.disabled = true;
 
-            // Estado de la batalla
             let ph = this.health;
             let pi = this.items;
             let active = true;
@@ -313,13 +369,14 @@ export default class Player {
                         }
                         cleanHandlers();
                         resolve(val);
+                        hit.play()
                     };
 
                     const onSkip = () => {
                         cleanHandlers();
                         resolve(0);
                     };
-
+                    
                     useBtn.addEventListener('click', onUse);
                     skipBtn.addEventListener('click', onSkip);
                 });
@@ -332,8 +389,8 @@ export default class Player {
                     return;
                 }
 
-                const Ataques = Math.floor(Math.random() * 6) + 1;
-                const Piedras = Math.floor(Math.random() * 10);
+                const Ataques = Math.floor(Math.random() * enemyMaxDamage) + 1;
+                const Piedras = Math.floor(Math.random() * 6);
                 pi += Piedras;
                 log(`- Encontraste ${Piedras} piedras en el piso para usar en tu batalla (ahora tienes ${pi} items).`);
                 log(`+ Tu enemigo hará ${Ataques} puntos de daño, ¿Cómo te vas a defender?.`);
@@ -356,8 +413,13 @@ export default class Player {
                 controlsEl.innerHTML = '';
                 if (enemyHealth > ph) {
                     log('Has sido derrotado.');
+                    gameover(this.items,this.enemiesDefeted,this.health);
+                    cleanup();
+                    return;
                 } else {
                     log('Victoria.');
+                    this.enemiesDefeted += 1;
+                    this.tileMap.modifyWorld(this.x, this.y, this.viewDirection);
                 }
                 this.items = pi;
                 this.health = ph;

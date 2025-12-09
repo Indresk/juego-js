@@ -1,9 +1,8 @@
 const generalContainer = document.querySelector('.general-container');
 
 const gameInit = ()=>{
-    let div = document.createElement('div');
-    div.className = 'intro-container hidden'
-    div.innerHTML = `
+    generalContainer.innerHTML = `
+        <div class="intro-container hidden">
             <div>
             <h1 class="highlighted-text">Senderos del Último Amanecer</h1>
             <p>Sumérgete en Senderos del Último Amanecer, una aventura narrativa y de supervivencia situada en un bosque indómito donde cada decisión puede significar la vida o la muerte.</p>
@@ -13,12 +12,12 @@ const gameInit = ()=>{
             </div>
             <div class="btniL">
             <button class="primary">Nueva partida</button>
-            <button class="secondary">Records</button> </div>`
-    generalContainer.appendChild(div);
+            <button class="secondary">Records</button> </div>
+        </div>`
+    setTimeout(()=>{
+        document.querySelector('.intro-container').classList.remove('hidden');
+    },2);
 }
 
 gameInit();
 
-setTimeout(()=>{
-    document.querySelector('.intro-container').classList.remove('hidden');
-},2);

@@ -1,6 +1,7 @@
 import TileMap from "./TileMap.js";
 import getData from "./getData.js";
 import getControlUi from "./controlsUi.js";
+import recordScreen from "./recordsScreen.js";
 const generalContainer = document.querySelector('.general-container');
 
 const tileSize = generalContainer.clientWidth/15;
@@ -8,13 +9,14 @@ const velocity = tileSize/10;
 
 let db = undefined;
 
-const tileMap = new TileMap(tileSize);
-const player = tileMap.getPlayer(velocity);
+let tileMap = null;
+let player = null;
 
 const gameLoop = (canvas) => {
-    setInterval(()=>{
+    let loop = setInterval(()=>{
         tileMap.draw(canvas);
-        player.draw(canvas)
+        player.draw(canvas);
+        if(document.querySelector('#gameover')){clearInterval(loop);player=null;tileMap=null}
     },1000/30)
 }
 
@@ -24,13 +26,15 @@ gameBoard.style.position = 'relative';
 
 window.addEventListener('click', async (e)=>{
     if(e.target.innerText === 'NUEVA PARTIDA'){
-            generalContainer.innerHTML = 'Cargando';
+        tileMap = new TileMap(tileSize);
+        player = tileMap.getPlayer(velocity);
+        generalContainer.innerHTML = 'Cargando';
+        click.play();
         try{
             await new Promise(res => setTimeout(res, 1000));
             db = await Promise.all([
                 getData('../db/maps.json'),
                 getData('../db/textos.json'),
-                getData('https://jsonplaceholder.typicode.com/todos/2')
             ]);
         }
         catch(error){
@@ -45,6 +49,8 @@ window.addEventListener('click', async (e)=>{
         generalContainer.appendChild(getControlUi());
         gameLoop(gameBoard);
     }
+    if(e.target.innerText === 'VOLVER AL INICIO'){gameInit();click.play();};
+    if(e.target.innerText === 'RECORDS'){recordScreen();click.play();};
 });
 
 // UI detection
@@ -65,21 +71,21 @@ window.addEventListener('mousedown', (e)=>{
 });
 
 window.addEventListener('keyup', (e)=>{
-    player.keyup(e.key);
-    if(e.key == 'w') generalContainer.querySelector('#WKey').className = '';
-    if(e.key == 's') generalContainer.querySelector('#SKey').className = '';
-    if(e.key == 'a') generalContainer.querySelector('#AKey').className = '';
-    if(e.key == 'd') generalContainer.querySelector('#DKey').className = '';   
-    if(e.key == 'e') generalContainer.querySelector('#EKey').className = ''; 
+    if(player)player.keyup(e.key);
+    if(e.key == 'w' && player) generalContainer.querySelector('#WKey').className = '';
+    if(e.key == 's' && player) generalContainer.querySelector('#SKey').className = '';
+    if(e.key == 'a' && player) generalContainer.querySelector('#AKey').className = '';
+    if(e.key == 'd' && player) generalContainer.querySelector('#DKey').className = '';   
+    if(e.key == 'e' && player) generalContainer.querySelector('#EKey').className = ''; 
 });
 
 window.addEventListener('keydown', (e)=>{
-    player.keydown(e.key);
-    if(e.key == 'w') generalContainer.querySelector('#WKey').className = 'active';
-    if(e.key == 's') generalContainer.querySelector('#SKey').className = 'active';
-    if(e.key == 'a') generalContainer.querySelector('#AKey').className = 'active';
-    if(e.key == 'd') generalContainer.querySelector('#DKey').className = 'active';
-    if(e.key == 'e') generalContainer.querySelector('#EKey').className = 'active';
+    if(player)player.keydown(e.key);
+    if(e.key == 'w' && player) generalContainer.querySelector('#WKey').className = 'active';
+    if(e.key == 's' && player) generalContainer.querySelector('#SKey').className = 'active';
+    if(e.key == 'a' && player) generalContainer.querySelector('#AKey').className = 'active';
+    if(e.key == 'd' && player) generalContainer.querySelector('#DKey').className = 'active';
+    if(e.key == 'e' && player) generalContainer.querySelector('#EKey').className = 'active';
 });
 
 

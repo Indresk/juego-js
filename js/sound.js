@@ -1,7 +1,15 @@
 const sound = new Audio('../assets/sounds/forest.wav');
+const click = new Audio('../assets/sounds/click.mp3');
+const hit = new Audio('../assets/sounds/hit.mp3');
+const itemSound = new Audio('../assets/sounds/getitem.mp3');
+const gameoverSound = new Audio('../assets/sounds/gameover.mp3');
+const fight = new Audio('../assets/sounds/fight-music.mp3');
 sound.loop = true;
 sound.play();
 sound.volume = 0.3;
+gameoverSound.volume = 0.4;
+itemSound.volume = 0.4;
+fight.volume = 0.6;
 
 const musicButton = document.querySelector('.music')
 

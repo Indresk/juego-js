@@ -8,18 +8,6 @@ export default class TileMap{
         this.mapIndex = 0;
         this.#mapImages();
     }
-    
-    // 0 -- Floor
-    // 1 -- Pot
-    // 2 -- Wall
-    // 3 -- Portal
-    // 4 -- Enemy
-    // 5 -- Grass
-    // 6 -- Tree
-    // 7 -- Path
-    // 8 -- Sign
-    // 9 -- Mushroom
-    // 10 -- PathTp
 
     #mapImages(){
         const floor = './assets/img/maptiles/white-tile.webp';       // 00
@@ -32,7 +20,7 @@ export default class TileMap{
         const path = './assets/img/maptiles/rocks-path.webp';        // 07
         const sign = './assets/img/maptiles/sign.webp';              // 08
         const mushroom = './assets/img/maptiles/mushroom.webp';      // 09
-        const gargoyle = './assets/img/maptiles/gargoyle.webp';   // 10
+        const gargoyle = './assets/img/maptiles/gargoyle.webp';      // 10
         const lakebl = './assets/img/maptiles/lake-bl.webp';         // 11
         const lakebr = './assets/img/maptiles/lake-br.webp';         // 12
         const laketl = './assets/img/maptiles/lake-tl.webp';         // 13
@@ -42,8 +30,22 @@ export default class TileMap{
         const treeWl = './assets/img/maptiles/tree-wl.webp';         // 17
         const potion = './assets/img/maptiles/full-potion.webp';     // 18
         const egg = './assets/img/maptiles/egg.webp';                // 19
+        const laketc = './assets/img/maptiles/lake-tc.webp';         // 20
+        const lakebc = './assets/img/maptiles/lake-bc.webp';         // 21
+        const animalSkull = './assets/img/maptiles/animal-skull.webp';// 22
+        const lakemc = './assets/img/maptiles/lake-mc.webp';         // 23
+        const spine = './assets/img/maptiles/spine.webp';            // 24
+        const cliff = './assets/img/maptiles/cliff.webp';            // 25
+        const cliffbl = './assets/img/maptiles/cliff-bl.webp';       // 26
+        const cliffbr = './assets/img/maptiles/cliff-br.webp';       // 27
+        const clifftl = './assets/img/maptiles/cliff-tl.webp';       // 28
+        const clifftr = './assets/img/maptiles/cliff-tr.webp';       // 29
+        const black = './assets/img/maptiles/black.webp';            // 30
+        const ladder = './assets/img/maptiles/ladder.webp';          // 31
+        const pine = './assets/img/maptiles/pine.webp';              // 32
+        const chest = './assets/img/maptiles/chest-closed.webp';     // 33
 
-        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,gargoyle,lakebl,lakebr,laketl,laketr,lakeml,lakemr,treeWl,potion,egg]
+        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,gargoyle,lakebl,lakebr,laketl,laketr,lakeml,lakemr,treeWl,potion,egg,laketc,lakebc,animalSkull,lakemc,spine,cliff,cliffbl,cliffbr,clifftl,clifftr,black,ladder,pine,chest]
     }
 
     mapDefiner(maps){
