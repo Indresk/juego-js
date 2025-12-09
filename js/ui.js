@@ -25,8 +25,8 @@ gameBoard.id = 'gameBoard';
 gameBoard.style.position = 'relative';
 
 window.addEventListener('click', async (e)=>{
-    sound.play();
     if(e.target.innerText === 'NUEVA PARTIDA'){
+        sound.play();
         tileMap = new TileMap(tileSize);
         player = tileMap.getPlayer(velocity);
         generalContainer.innerHTML = 'Cargando';
@@ -50,8 +50,8 @@ window.addEventListener('click', async (e)=>{
         generalContainer.appendChild(getControlUi());
         gameLoop(gameBoard);
     }
-    if(e.target.innerText === 'VOLVER AL INICIO'){gameInit();click.play();};
-    if(e.target.innerText === 'RECORDS'){recordScreen();click.play();};
+    if(e.target.innerText === 'VOLVER AL INICIO'){gameInit();click.play();sound.play();};
+    if(e.target.innerText === 'RECORDS'){recordScreen();click.play();sound.play();};
 });
 
 // UI detection
