@@ -179,7 +179,9 @@ button.music{
 .controlBoard{
     background-color: rgba(0, 0, 0, 0.3);
     flex-basis: 40%;
+    flex-grow: 1;
     padding: 1rem;
+    height: fit-content;
 }
 
 #WKey{
@@ -280,4 +282,63 @@ button.music{
     background-color: black;
     border: solid 3px white;
     color: white;
+}
+
+#status-displayer{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding: .5rem;
+    background-color: lightslategray;
+    border-radius: 10px;
+    gap: .5rem;
+    margin-bottom: .5rem;
+}
+
+#battle-log{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+}
+
+#displayed-text{
+    font-family: monospace;
+    margin-bottom: 1rem;
+}
+
+#buttons-onPage{
+    display: flex;
+    gap: 2rem;
+    text-align: center;
+    p{
+        margin-bottom: 1rem;
+    }
+}
+
+.pickup-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+}
+
+.move-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem
+}
+
+.top-move-buttons, .bottom-move-buttons{
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+}
+
+#battle-log{
+    font-family: monospace;
+    white-space:pre-wrap;
+    margin-bottom:10px;
+    margin-top:10px;
+    max-height: 200px;
+    overflow-y: auto;
 }

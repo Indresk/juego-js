@@ -32,7 +32,7 @@ export default class TileMap{
         const path = './assets/img/maptiles/rocks-path.webp';        // 07
         const sign = './assets/img/maptiles/sign.webp';              // 08
         const mushroom = './assets/img/maptiles/mushroom.webp';      // 09
-        const pathTp = './assets/img/maptiles/rocks-path-tp.webp';   // 10
+        const gargoyle = './assets/img/maptiles/gargoyle.webp';   // 10
         const lakebl = './assets/img/maptiles/lake-bl.webp';         // 11
         const lakebr = './assets/img/maptiles/lake-br.webp';         // 12
         const laketl = './assets/img/maptiles/lake-tl.webp';         // 13
@@ -42,10 +42,8 @@ export default class TileMap{
         const treeWl = './assets/img/maptiles/tree-wl.webp';         // 17
         const potion = './assets/img/maptiles/full-potion.webp';     // 18
         const egg = './assets/img/maptiles/egg.webp';                // 19
-        const floorTp = './assets/img/maptiles/white-tile.webp';     // 20
-        const grassTp = './assets/img/maptiles/grass.webp';          // 21
 
-        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,pathTp,lakebl,lakebr,laketl,laketr,lakeml,lakemr,treeWl,potion,egg,floorTp,grassTp]
+        this.mapImages = [floor,pot,wall,portal,enemy,grass,tree,path,sign,mushroom,gargoyle,lakebl,lakebr,laketl,laketr,lakeml,lakemr,treeWl,potion,egg]
     }
 
     mapDefiner(maps){
